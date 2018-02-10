@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Serialization"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="" 
+        FontSize="16"
+        Name="TaskWindow"
+        Loaded="MainWindow_OnLoaded" 
+        Height="500" Width="700" 
+        MinHeight="{Binding MinHeight1}" MinWidth="{Binding MinWidth1}" >
+
+        <Frame Name="WindowFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+               MinHeight="350" MinWidth="530" NavigationUIVisibility="Hidden" />
 </Window>

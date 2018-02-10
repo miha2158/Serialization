@@ -1,0 +1,47 @@
+﻿<Page x:Class="Serialization.Task1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Serialization"
+      mc:Ignorable="d"
+      Title="" 
+      FontSize="16"
+      Name="Task1Page"
+      VerticalAlignment="Stretch"
+      HorizontalAlignment="Stretch">
+
+    <Grid Name="GridTask1" Loaded="MainGrid_OnLoaded" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="350" MinWidth="530">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                 Background="WhiteSmoke" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AcceptsReturn="True" 
+                 Margin="1" />
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+            <TextBox Name="SerializePath" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10 5" 
+                     Background="WhiteSmoke" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <Button Name="ChooseSerializePath" Margin="5" Width="150" Height="30" Content="Обзор..." Click="ChooseSerializePath_Click" />
+        </StackPanel>
+
+        <Button Grid.Row="2" Grid.Column="0" Margin="10 5" Content="XML сериализировать" Name="XML_Seriallize" Click="XML_Seriallize_Click" />
+        <Button Grid.Row="3" Grid.Column="0" Margin="10 5" Content="XML десериализировать" Name="XML_Deseriallize" 
+                Click="XML_Deseriallize_Click" />
+
+
+        <Button Grid.Row="2" Grid.Column="1" Margin="10 5" Content="Бинарно сериализировать" Name="BinaryFormatter_Serialize" 
+                Click="BinaryFormatter_Serialize_Click" />
+        <Button Grid.Row="3" Grid.Column="1" Margin="10 5" Content="Бинарно десериализировать" Name="BinaryFormatter_Deserialize" 
+                Click="BinaryFormatter_Deserialize_Click" />
+
+    </Grid>
+</Page>
