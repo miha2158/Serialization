@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Identificators
+namespace Serialization
 {
     [Serializable]
     public enum Params

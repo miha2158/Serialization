@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Identificators
+namespace Serialization
 {
     public static class Extenisons
     {
-        static void MakeTree(string[] strings)
+        public static BinTree<Identifier> MakeTree(this string str)
+        {
+            var tree = new BinTree<Identifier>();
+            var strings = str.Split('\n');
+            foreach (string s in strings)
+                tree.Add(ParseIdentifier(s.Trim()));
+            return tree;
+        }
+
+        public static BinTree<Identifier> MakeTree(this string[] strings)
         {
             var tree = new BinTree<Identifier>();
             foreach (string s in strings)
                 tree.Add(ParseIdentifier(s));
+            return tree;
         }
 
         public static Types ParseType(string s)
@@ -68,54 +76,72 @@ namespace Identificators
             if (s == string.Empty)
                 return result;
 
-            if (s.Contains("string") && !s.Contains('('))
+
+            if (s.Contains("const"))
             {
-                string p = s.Substring(s.IndexOf('\"'), s.LastIndexOf('\"') - s.IndexOf('\"'));
-                if (s.Contains("consts"))
-                    return new Consts(s.Split(' ')[2], Types._string, p);
-                return new Vars(s.Split(' ')[1], Types._string, p);
-            }
+                if (s.Contains("string"))
+                {
+                    string p = s.Substring(s.IndexOf('\"') + 1, s.LastIndexOf('\"') - s.IndexOf('\"') - 1);
+                    return result = new Consts(s.Split(' ')[2], Types._string, p);
+                }
 
-            if (s.Contains("char"))
+                if (s.Contains("char"))
+                    return result = new Consts(s.Split(' ')[2], Types._char, s[s.IndexOf('\'') + 1]);
+
+                var sArr1 = s.Split(' ').ToList();
+                return result = new Consts(sArr1[2], ParseType(sArr1[1]), sArr1[4].TrimEnd(';').ParseTo(ParseType(sArr1[1])));
+            }
+            else
             {
-                if (s.Contains("consts"))
-                    return new Consts(s.Split(' ')[2], Types._char, s[s.IndexOf('\'') + 1]);
-                return new Vars(s.Split(' ')[1], Types._char, s[s.IndexOf('\'') + 1]);
+                if (s.Contains("string") && s.IndexOf(')') != s.Length - 2)
+                {
+                    if (s.Contains("="))
+                    {
+                        string p = s.Substring(s.IndexOf('\"') + 1, s.LastIndexOf('\"') - s.IndexOf('\"') - 1);
+                        return result = new Vars(s.Split(' ')[1].TrimEnd(';'), Types._string, p);
+                    }
+                    return result = new Vars(s.Split(' ')[1].TrimEnd(';'), Types._string);
+                }
+
+                if (s.IndexOf("char") == 0)
+                {
+                    if (s.Contains("="))
+                        return result = new Vars(s.Split(' ')[1].TrimEnd(';'), Types._char, s[s.IndexOf('\'') + 1]);
+                    return result = new Vars(s.Split(' ')[1].TrimEnd(';'), Types._char);
+                }
             }
+            
+            var ss = (string)s.Clone();
+            ss = ss.Replace("(", " ( ").Replace(")", " ) ").Replace("  ", " ").Trim();
 
-            s = s.Replace("(", " ( ").Replace(")", " ) ").Replace("  ", " ");
-            s = s.Trim();
-            if (s == string.Empty)
-                return result;
-
-            if (s[s.Length - 1] != ';')
+            if (ss[ss.Length - 1] != ';')
                 throw new FormatException();
-            s = s.TrimEnd(';').Trim();
-            var sArr = s.Split(' ').ToList();
+            ss = ss.TrimEnd(';').Trim();
+            var sArr = ss.Split(' ').ToList();
 
-            if (sArr[0] == "const")
-                return new Consts(sArr[2], ParseType(sArr[1]), sArr[4].ParseTo(ParseType(sArr[1])));
-
-            if (s.Contains('('))
-                if (!s.Contains(')'))
+            if (ss.Contains('('))
+                if (!ss.Contains(')'))
                     throw new FormatException();
                 else
                 {
                     result = new Methods(sArr[1], ParseType(sArr[0]));
-                    var list = new LinkedList<Tuple<string, Types, Params>>();
-                    string sTemp = s.Substring(s.IndexOf('('), s.LastIndexOf(')') - s.IndexOf('('));
+                    var list = new List<Tuple>();
+                    string sTemp = ss.Substring(ss.IndexOf('(') + 1, ss.LastIndexOf(')') - ss.IndexOf('(') - 1);
                     sTemp = sTemp.Trim('(', ')');
+
+                    if (sTemp.Trim() == string.Empty)
+                        return result;
 
                     var args = sTemp.Split(',');
                     foreach (string s1 in args)
                     {
-                        string[] arg = s1.Split(' ');
+                        string[] arg = s1.Trim().Split(' ');
                         if (arg.Length == 2)
-                            list.AddLast(new Tuple<string, Types, Params>(arg[1].Trim(), ParseType(arg[0]), Params._val));
+                            list.Add(new Tuple(arg[1].Trim(), ParseType(arg[0]), Params._val));
                         else if (arg[0] == "out")
-                            list.AddLast(new Tuple<string, Types, Params>(arg[1].Trim(), ParseType(arg[0]), Params._out));
+                            list.Add(new Tuple(arg[2].Trim(), ParseType(arg[1]), Params._out));
                         else if (arg[0] == "ref")
-                            list.AddLast(new Tuple<string, Types, Params>(arg[1].Trim(), ParseType(arg[0]), Params._ref));
+                            list.Add(new Tuple(arg[2].Trim(), ParseType(arg[1]), Params._ref));
                     }
 
                     ((Methods)result).args = list;
@@ -123,9 +149,11 @@ namespace Identificators
                 }
 
             if (sArr[0] == "class")
-                return new Classes(sArr[1]);
+                return result = new Classes(sArr[1]);
 
-            return new Vars(sArr[1], ParseType(sArr[0]));
+            if(ss.Contains("="))
+                return result = new Consts(sArr[1], ParseType(sArr[0]), sArr[3].ParseTo(ParseType(sArr[0])));
+            return result = new Vars(sArr[1], ParseType(sArr[0]));
         }
     }
 }

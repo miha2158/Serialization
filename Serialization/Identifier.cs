@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Xml.Serialization;
 
-namespace Identificators {
+namespace Serialization
+{
+    [XmlInclude(typeof(Consts))]
+    [XmlInclude(typeof(Vars))]
+    [XmlInclude(typeof(Classes))]
+    [XmlInclude(typeof(Methods))]
     [Serializable]
     public abstract class Identifier: IComparable<Identifier>
     {
@@ -9,7 +15,8 @@ namespace Identificators {
 
         public Types typeReturned = Types._void;
         public UseCase uses;
-        
+
+        protected Identifier(){ }
         protected Identifier(string name)
         {
             this.name = name;
@@ -32,7 +39,7 @@ namespace Identificators {
         }
         public override string ToString()
         {
-            return name;
+            return $"{typeReturned.ToString().Substring(1)} {name}";
         }
         public override int GetHashCode()
         {

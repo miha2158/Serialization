@@ -10,8 +10,10 @@
         Name="TaskWindow"
         Loaded="MainWindow_OnLoaded" 
         Height="500" Width="700" 
-        MinHeight="{Binding MinHeight1}" MinWidth="{Binding MinWidth1}" >
+        MinHeight="400" MinWidth="550" 
+        SizeToContent="WidthAndHeight" 
+        WindowStyle="SingleBorderWindow">
 
-        <Frame Name="WindowFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-               MinHeight="350" MinWidth="530" NavigationUIVisibility="Hidden" />
+    <Frame Name="WindowFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden" />
+
 </Window>

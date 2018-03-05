@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Xml.Serialization;
+using static Serialization.Extenisons;
 
-namespace Identificators
+namespace Serialization
 {
-    using static Extenisons;
-
+    [XmlInclude(typeof(Vars))]
     [Serializable]
     public class Vars: Identifier
     {
         public readonly object value;
 
+        public Vars() : base() { }
         public Vars(string name): base(name)
         {
             uses = UseCase.Vars;
@@ -24,6 +26,38 @@ namespace Identificators
             else
                 throw new TypeInitializationException("Введён  аргумент не правильного типа", new Exception());
             uses = UseCase.Vars;
+        }
+
+        public override string ToString()
+        {
+            string result = base.ToString();
+
+            if (value == null)
+                return result + ";";
+
+            result += " = ";
+            switch (typeReturned)
+            {
+                case Types._string:
+                    result += $"\"{value}\"";
+                    break;
+                case Types._char:
+                    result += $"'{value}'";
+                    break;
+                case Types._int:
+                    result += $"{int.Parse(value.ToString())}";
+                    break;
+                case Types._float:
+                    result += $"{float.Parse(value.ToString())}";
+                    break;
+                case Types._bool:
+                    result += $"{bool.Parse(value.ToString())}";
+                    break;
+            }
+
+            result += ";";
+
+            return result;
         }
     }
 }

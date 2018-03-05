@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Xml.Serialization;
 
-namespace Identificators
+namespace Serialization
 {
     [Serializable]
     public class BinTree <T> where T:IComparable<T>
     {
-        public BinTree<T> right { get; private set; } = null;
-        public BinTree<T> left { get; private set; } = null;
+        public BinTree<T> right ;
+        public BinTree<T> left ;
 
         public T data;
 
@@ -48,6 +49,35 @@ namespace Identificators
         public void NewLeft(T data)
         {
             left = new BinTree<T>(data);
+        }
+
+        public override string ToString()
+        {
+            if (left != null && right != null)
+                return $"{left.ToString(4)}\n{data}\n{right.ToString(4)}";
+
+            if (left != null && right == null) 
+                return $"{left.ToString(4)}\n{data}";
+
+            if (left == null && right != null)
+                return $"{data}\n{right.ToString(4)}";
+
+            return $"{data}";
+        }
+        private string ToString(int padding)
+        {
+            return ToString();
+            var p = ToString().Split('\n');
+
+            for (var i = 0; i < p.Length; i++)
+                p[i] = string.Empty.PadLeft(padding) + p[i];
+
+            var result = string.Empty;
+
+            foreach (string s in p)
+                result += s + "\n";
+
+            return result;
         }
     }
 }

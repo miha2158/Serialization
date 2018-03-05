@@ -18,19 +18,27 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                 Background="WhiteSmoke" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AcceptsReturn="True" 
-                 Margin="1" />
+        <TextBox Name="StringToParse" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                 Background="WhiteSmoke" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" AcceptsReturn="True" Margin="1" FontFamily="Courier New" />
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
-            <TextBox Name="SerializePath" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10 5" 
-                     Background="WhiteSmoke" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-            <Button Name="ChooseSerializePath" Margin="5" Width="150" Height="30" Content="Обзор..." Click="ChooseSerializePath_Click" />
+            <TextBox Name="SerializePath" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10 5" Background="WhiteSmoke" 
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Name="ChangeTask" Grid.Column="0" Margin="5" Width="150" Height="30" Content="Задание 2" Click="ChangeTask_Click" />
+                <Button Name="ChooseSerializePath" Grid.Column="1" Margin="5" Width="150" Height="30" Content="Обзор..." Click="ChooseSerializePath_Click" />
+
+            </Grid>
         </StackPanel>
 
         <Button Grid.Row="2" Grid.Column="0" Margin="10 5" Content="XML сериализировать" Name="XML_Seriallize" Click="XML_Seriallize_Click" />
