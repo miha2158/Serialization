@@ -35,7 +35,7 @@ namespace Serialization
         }
         public int CompareTo(Identifier other)
         {
-            return Math.Sign(hash - other.hash);
+            return String.Compare(ToString(), other.ToString(), StringComparison.Ordinal);
         }
         public override string ToString()
         {

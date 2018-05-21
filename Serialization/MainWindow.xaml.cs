@@ -26,7 +26,6 @@ namespace Serialization
         public MainWindow()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.Manual;
         }
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {

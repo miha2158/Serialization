@@ -19,7 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Xml.Serialization;
-using static Serialization.Extenisons;
+using static Serialization.Parse;
 using FileStream = System.IO.FileStream;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -69,60 +69,61 @@ bool az = true;";
             fBrowser.ShowDialog();
             SerializePath.Text = fBrowser.SelectedPath;
         }
-
         private void MakeTree()
         {
             try
             {
-                mainTree = StringToParse.Text.MakeTree();
-                Console.WriteLine("");
+                mainTree = StringToParse.Text.Make();
+                Console.WriteLine("tree made");
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"{ex}{Environment.NewLine}{ex.StackTrace}");
                 MessageBox.Show($@"Неправильный формат идентификатора
 {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
         }
         
         private void XML_Seriallize_Click(object sender, RoutedEventArgs e)
         {
             MakeTree();
 
-            var file = new OpenFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".xml",
-                FileName = "file",
-                Multiselect = false
-            };
+            //var file = new OpenFileDialog()
+            //{
+            //    AddExtension = true,
+            //    DefaultExt = ".xml",
+            //    FileName = "file",
+            //    Multiselect = false
+            //};
 
-            file.ShowDialog();
+            //file.ShowDialog();
 
-            using (var fs = new FileStream(SerializePath.Text + file.SafeFileName, FileMode.Create))
+            using (var fs = new FileStream(SerializePath.Text + @"\xml", FileMode.Create))
             {
                 var xs = new XmlSerializer(typeof(BinTree<Identifier>));
                 xs.Serialize(fs,mainTree);
             }
+            Console.WriteLine("xml serialized");
         }
         private void XML_Deseriallize_Click(object sender, RoutedEventArgs e)
         {
-            var file = new OpenFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".xml",
-                FileName = "file",
-                Multiselect = false
-            };
+            //var file = new OpenFileDialog()
+            //{
+            //    AddExtension = true,
+            //    DefaultExt = ".xml",
+            //    FileName = "file",
+            //    Multiselect = false
+            //};
 
-            file.ShowDialog();
+            //file.ShowDialog();
 
-            using (var fs = new FileStream(SerializePath.Text + file.SafeFileName, FileMode.Open))
+            using (var fs = new FileStream(SerializePath.Text + @"\xml", FileMode.Open))
             {
                 var xs = new XmlSerializer(typeof(BinTree<Identifier>));
                 mainTree = (BinTree<Identifier>)xs.Deserialize(fs);
             }
+            Console.WriteLine("xml deserialized");
 
             StringToParse.Text = mainTree.ToString();
         }
@@ -131,41 +132,42 @@ bool az = true;";
         {
             MakeTree();
 
-            var file = new OpenFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".bin",
-                FileName = "file",
-                Multiselect = false
-            };
+            //var file = new OpenFileDialog()
+            //{
+            //    AddExtension = true,
+            //    DefaultExt = ".bin",
+            //    FileName = "file",
+            //    Multiselect = false
+            //};
 
-            file.ShowDialog();
+            //file.ShowDialog();
 
 
-            using (var fs = new FileStream(SerializePath.Text + file.SafeFileName, FileMode.Create))
+            using (var fs = new FileStream(SerializePath.Text + @"\bin", FileMode.Create))
             {
                 var bf = new BinaryFormatter();
                 bf.Serialize(fs, mainTree);
             }
-
+            Console.WriteLine("binary serialized");
         }
         private void BinaryFormatter_Deserialize_Click(object sender, RoutedEventArgs e)
         {
-            var file = new OpenFileDialog()
-            {
-                AddExtension = true,
-                DefaultExt = ".bin",
-                FileName = "file",
-                Multiselect = false
-            };
+            //var file = new OpenFileDialog()
+            //{
+            //    AddExtension = true,
+            //    DefaultExt = ".bin",
+            //    FileName = "file",
+            //    Multiselect = false
+            //};
 
-            file.ShowDialog();
+            //file.ShowDialog();
             
             using (var fs = new FileStream(SerializePath.Text + @"\bin", FileMode.Open))
             {
                 var bf = new BinaryFormatter();
                 mainTree = (BinTree<Identifier>)bf.Deserialize(fs);
             }
+            Console.WriteLine("binary deserialized");
 
             StringToParse.Text = mainTree.ToString();
         }

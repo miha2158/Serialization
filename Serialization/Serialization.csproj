@@ -67,6 +67,7 @@
     <Compile Include="Task2.xaml.cs">
       <DependentUpon>Task2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tree.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="UseCase.cs" />
     <Compile Include="Vars.cs" />

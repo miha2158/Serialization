@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using static Serialization.Extenisons;
+using static Serialization.Parse;
 
 namespace Serialization
 {
@@ -21,7 +21,7 @@ namespace Serialization
         }
         public Consts(string name, Types type, dynamic value): base(name, type)
         {
-            if (ParseType(value.GetType().ToString()) == typeReturned)
+            if (Type(value.GetType().ToString()) == typeReturned)
                 this.value = value;
             else throw new TypeInitializationException("Введён  аргумент не правильного типа",new Exception());
             uses = UseCase.Consts;

@@ -34,8 +34,26 @@
             </Grid>
         </StackPanel>
 
-        <DataGrid Name="Task2DataGrid"  Grid.Row="1" Background="WhiteSmoke" />
-        <TextBlock Name="Test" Grid.Row="1" Background="Transparent" TextAlignment="Left"/>
+        <ListView Name="ItemsView" Grid.Row="1" ItemsSource="{Binding ItemsList}" d:DataContext="{d:DesignInstance local:Task2}">
+
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Width" Value="Auto"/>
+                </Style>
+            </ListView.Resources>
+
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="ИНН" DisplayMemberBinding="{Binding INN}"/>
+                    <GridViewColumn Header="КПП" DisplayMemberBinding="{Binding KPP}"/>
+                    <GridViewColumn Header="PC" DisplayMemberBinding="{Binding PositionsCount}"/>
+                    <GridViewColumn Header="Среднее" DisplayMemberBinding="{Binding Avg}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!--<DataGrid Name="ItemsView" Grid.Row="1"/>-->
 
     </Grid>
 </Page>

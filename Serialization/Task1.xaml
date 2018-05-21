@@ -29,16 +29,11 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" >
             <TextBox Name="SerializePath" Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10 5" Background="WhiteSmoke" 
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
 
-                <Button Name="ChangeTask" Grid.Column="0" Margin="5" Width="150" Height="30" Content="Задание 2" Click="ChangeTask_Click" />
-                <Button Name="ChooseSerializePath" Grid.Column="1" Margin="5" Width="150" Height="30" Content="Обзор..." Click="ChooseSerializePath_Click" />
-
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="ChangeTask" Margin="30 5" Width="150" Height="30" Content="Задание 2" Click="ChangeTask_Click" />
+                <Button Name="ChooseSerializePath" Margin="30 5" Width="150" Height="30" Content="Обзор..." Click="ChooseSerializePath_Click" />
+            </StackPanel>
         </StackPanel>
 
         <Button Grid.Row="2" Grid.Column="0" Margin="10 5" Content="XML сериализировать" Name="XML_Seriallize" Click="XML_Seriallize_Click" />

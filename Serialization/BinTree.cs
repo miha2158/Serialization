@@ -54,30 +54,15 @@ namespace Serialization
         public override string ToString()
         {
             if (left != null && right != null)
-                return $"{left.ToString(4)}\n{data}\n{right.ToString(4)}";
+                return $"{left}{Environment.NewLine}{data}{Environment.NewLine}{right}";
 
             if (left != null && right == null) 
-                return $"{left.ToString(4)}\n{data}";
+                return $"{left}{Environment.NewLine}{data}";
 
             if (left == null && right != null)
-                return $"{data}\n{right.ToString(4)}";
+                return $"{data}{Environment.NewLine}{right}";
 
             return $"{data}";
-        }
-        private string ToString(int padding)
-        {
-            return ToString();
-            var p = ToString().Split('\n');
-
-            for (var i = 0; i < p.Length; i++)
-                p[i] = string.Empty.PadLeft(padding) + p[i];
-
-            var result = string.Empty;
-
-            foreach (string s in p)
-                result += s + "\n";
-
-            return result;
         }
     }
 }

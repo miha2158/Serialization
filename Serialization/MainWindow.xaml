@@ -11,8 +11,9 @@
         Loaded="MainWindow_OnLoaded" 
         Height="500" Width="700" 
         MinHeight="400" MinWidth="550" 
-        SizeToContent="WidthAndHeight" 
-        WindowStyle="SingleBorderWindow">
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        MaxHeight="1000">
 
     <Frame Name="WindowFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden" />
 
