@@ -73,7 +73,7 @@ bool az = true;";
         {
             try
             {
-                mainTree = StringToParse.Text.Make();
+                mainTree = IdentifierTree.Make(StringToParse.Text);
                 Console.WriteLine("tree made");
             }
             catch (Exception ex)
